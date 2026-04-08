@@ -50,11 +50,12 @@ local new_actions = {
 		--sprite_unidentified = "data/ui_gfx/gun_actions/spread_reduce_unidentified.png",
 		--spawn_requires_flag = "card_unlocked_musicbox",
 		type 		= ACTION_TYPE_OTHER,
+		recursive = true,
 		spawn_level                       = "3,5,6,10",
 		spawn_probability                 = "0.2,0.3,0.2,1",
 		price = 200,
 		mana = 35,
-		action = function()
+		action = function(recursion_level, iteration)
 
 			local data = {}
 
@@ -69,7 +70,12 @@ local new_actions = {
 			if data ~= nil then
 				while (#gurbertbrain >= how_many) do
 					--dont_draw_actions = true
-					data.action()
+
+					local rec = check_recursion(data, recursion_level)
+					if rec > -1 then
+						data.action(rec)
+					end
+
 					--dont_draw_actions = false
 
 					how_many = how_many + 1
