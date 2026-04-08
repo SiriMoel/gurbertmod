@@ -15,41 +15,31 @@ local new_actions = {
 		mana = 35,
 		action = function()
 
-			--if reflecting then return end
-
-			--print("hand: " .. #hand)
+			local data = {}
+			
+			local how_many = 1
+			
 			if #deck > 0 then
+				data = deck[1]
+			else
+				data = nil
+			end
 
+			if data ~= nil then
 				gurbertbrain = {}
 
-				local how_many = 0
-
-				for i,v in ipairs(deck) do
-
-					if --[[v.id == "GURBERT_RECALL" or]] v.type == ACTION_TYPE_OTHER then
-						break
-					elseif v.from_gurbertbrain ~= true then
-						--print(v.id or "couldn't find action id :(")
-						how_many = how_many + 1
-						table.insert(gurbertbrain, v)
-					end
+				while (#deck >= how_many) and ((data.type == ACTION_TYPE_PROJECTILE) or (data.type == ACTION_TYPE_MODIFIER) or (data.type == ACTION_TYPE_STATIC_PROJECTILE) --[[or (data.type == ACTION_TYPE_DRAW_MANY)]] or (data.type == ACTION_TYPE_OTHER)) do
+					table.insert(gurbertbrain, data)
+					how_many = how_many + 1
+					data = deck[how_many]
 				end
-
-				local str = "brain: "
-				for i=1,#gurbertbrain do
-					str = str .. gurbertbrain[i].id .. " "
-				end
-				GamePrint(str)
 
 				for i=1,how_many do
-					local data = deck[1]
+					data = deck[1]
 					table.insert(discarded, data)
 					table.remove(deck, 1)
 				end
-
-				draw_actions(1, false)
 			end
-
 		end,
 	},
 	{
@@ -66,36 +56,29 @@ local new_actions = {
 		mana = 35,
 		action = function()
 
-			--if reflecting then return end
+			local data = {}
 
-			--print("brain: " .. #gurbertbrain)
+			local how_many = 1
 
 			if #gurbertbrain > 0 then
+				data = gurbertbrain[1]
+			else
+				data = nil
+			end
 
-				local str = "recalled: "
+			if data ~= nil then
+				while (#gurbertbrain >= how_many) do
+					--dont_draw_actions = true
+					data.action()
+					--dont_draw_actions = false
 
-				for i,v in ipairs(gurbertbrain) do
-					--print(v.id or "couldn't find action id :(")
-					v.from_gurbertbrain = true
-					str = str .. v.id .. " "
-					table.insert(hand, v)
+					how_many = how_many + 1
+					data = gurbertbrain[how_many]
 				end
-
-				GamePrint(str)
-
-				local hand_str = "hand: "
-				for i=1,#hand do
-					hand_str = hand_str .. hand[i].id .. " "
-				end
-				GamePrint(hand_str)
-
-				draw_actions(#hand, true)
-				
-				--gurbertbrain = {}
 			else
 				GamePrint("No thoughts.")
 			end
-			
+
 		end,
 	},
 }
