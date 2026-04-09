@@ -1,1 +1,5 @@
 ,,,,,,,,,,,,,,,,,,,,,,,
+action_gurbert_remember,"Gurbert, remember.",,,,,,,,,,,,,,,,,,,,,,
+actiondesc_gurbert_remember,"Gurbert will remember the subsequent spells, up until a utility or multicast spell is encountered.",,,,,,,,,,,,,,,,,,,,,,
+action_gurbert_recall,"Gurbert, recall.",,,,,,,,,,,,,,,,,,,,,,
+actiondesc_gurbert_recall,"Gurbert will recall remembered spells and cast them.",,,,,,,,,,,,,,,,,,,,,,

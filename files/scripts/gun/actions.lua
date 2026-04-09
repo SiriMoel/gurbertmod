@@ -3,8 +3,8 @@ dofile_once("mods/gurbertmod/files/scripts/utils.lua")
 local new_actions = {
 	{
 		id          = "REMEMBER",
-		name 		= "remember",
-		description = "remember desc",
+		name 		= "$action_gurbert_remember",
+		description = "$actiondesc_gurbert_remember",
 		sprite 		= "mods/gurbertmod/files/ui_gfx/gun_actions/remember.png",
 		--sprite_unidentified = "data/ui_gfx/gun_actions/spread_reduce_unidentified.png",
 		--spawn_requires_flag = "card_unlocked_musicbox",
@@ -12,7 +12,7 @@ local new_actions = {
 		spawn_level                       = "3,5,6,10",
 		spawn_probability                 = "0.2,0.3,0.2,1",
 		price = 200,
-		mana = 35,
+		mana = 10,
 		action = function()
 
 			local data = {}
@@ -44,8 +44,8 @@ local new_actions = {
 	},
 	{
 		id          = "RECALL",
-		name 		= "recall",
-		description = "recall desc",
+		name 		= "$action_gurbert_recall",
+		description = "$actiondesc_gurbert_recall",
 		sprite 		= "mods/gurbertmod/files/ui_gfx/gun_actions/recall.png",
 		--sprite_unidentified = "data/ui_gfx/gun_actions/spread_reduce_unidentified.png",
 		--spawn_requires_flag = "card_unlocked_musicbox",
@@ -54,7 +54,7 @@ local new_actions = {
 		spawn_level                       = "3,5,6,10",
 		spawn_probability                 = "0.2,0.3,0.2,1",
 		price = 200,
-		mana = 35,
+		mana = 70,
 		action = function(recursion_level, iteration)
 
 			local data = {}
