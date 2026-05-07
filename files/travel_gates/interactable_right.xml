@@ -1,0 +1,26 @@
+<Entity>
+
+    <InteractableComponent
+        _tags="gurbert_gate_interact"
+        radius="20"
+        ui_text="Set as exit"
+        name="Frog Gate">
+    </InteractableComponent>
+
+    <LuaComponent
+        _tags="gurbert_gate_interact"
+        script_interacting="mods/gurbertmod/files/travel_gates/interactable_right.lua">
+    </LuaComponent>
+
+    <SpriteComponent 
+		image_file="data/buildings_gfx/thundertrap_right.xml" 
+		special_scale_x="1"
+		has_special_scale="1"
+		offset_x="0"
+		offset_y="0" >
+	</SpriteComponent>
+
+	<SpriteAnimatorComponent>
+	</SpriteAnimatorComponent>
+
+</Entity>

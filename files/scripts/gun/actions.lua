@@ -69,21 +69,67 @@ local new_actions = {
 
 			if data ~= nil then
 				while (#gurbertbrain >= how_many) do
-					--dont_draw_actions = true
 
 					local rec = check_recursion(data, recursion_level)
 					if rec > -1 then
 						data.action(rec)
 					end
 
-					--dont_draw_actions = false
-
 					how_many = how_many + 1
 					data = gurbertbrain[how_many]
+					
 				end
 			else
 				GamePrint("No thoughts.")
 			end
+
+		end,
+	},
+	{
+		id          = "REMEMBER_ONE",
+		name 		= "$action_gurbert_remember_one",
+		description = "$actiondesc_gurbert_remember_one",
+		sprite 		= "mods/gurbertmod/files/ui_gfx/gun_actions/remember_one.png",
+		--sprite_unidentified = "data/ui_gfx/gun_actions/spread_reduce_unidentified.png",
+		--spawn_requires_flag = "card_unlocked_musicbox",
+		type 		= ACTION_TYPE_OTHER,
+		spawn_level                       = "3,5,6,10",
+		spawn_probability                 = "0.2,0.3,0.2,1",
+		price = 200,
+		mana = 10,
+		action = function()
+
+			local data = {}
+						
+			if #deck > 0 then
+				data = deck[1]
+			else
+				data = nil
+			end
+
+			if data ~= nil then
+				table.insert(gurbertbrain, data)
+
+				table.insert(discarded, data)
+				table.remove(deck, 1)
+			end
+		end,
+	},
+	{
+		id          = "FROGET",
+		name 		= "$action_gurbert_forget",
+		description = "$actiondesc_gurbert_forget",
+		sprite 		= "mods/gurbertmod/files/ui_gfx/gun_actions/forget.png",
+		--sprite_unidentified = "data/ui_gfx/gun_actions/spread_reduce_unidentified.png",
+		--spawn_requires_flag = "card_unlocked_musicbox",
+		type 		= ACTION_TYPE_OTHER,
+		spawn_level                       = "3,5,6,10",
+		spawn_probability                 = "0.2,0.3,0.2,1",
+		price = 200,
+		mana = -20,
+		action = function()
+
+			gurbertbrain = {}
 
 		end,
 	},

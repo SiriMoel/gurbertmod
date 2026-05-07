@@ -1,0 +1,20 @@
+<Entity>
+
+    <LuaComponent
+        script_source_file="mods/gurbertmod/files/travel_gates/spawn.lua"
+        execute_on_added="1"
+        remove_after_executed="1"
+    ></LuaComponent>
+
+    <VariableStorageComponent
+        _tags="frog_gate_open"
+        name="frog_gate_open"
+        value_bool="0"
+    ></VariableStorageComponent>
+
+    <LuaComponent
+        script_source_file="mods/gurbertmod/files/travel_gates/update.lua"
+        execute_every_n_frame="30"
+    ></LuaComponent>
+
+</Entity>
