@@ -17,16 +17,12 @@ if exit_id ~= -1 then
                 local entity_portal = EntityLoad("mods/gurbertmod/files/travel_gates/portal.xml", x, y-50)
                 local comp_tele = EntityGetFirstComponentIncludingDisabled(entity_portal, "TeleportComponent")
                 if comp_tele ~= nil then
-                    --ComponentSetValue2(comp_tele, "target.x", exit_x)
-                    --ComponentSetValue2(comp_tele, "target.y", exit_y)
                     ComponentSetValue2(comp_tele, "target", exit_x, exit_y)
                 end
                 EntityAddChild(gate, entity_portal)
             else
                 local comp_tele = EntityGetFirstComponentIncludingDisabled(portal, "TeleportComponent")
                 if comp_tele ~= nil then
-                    --ComponentSetValue2(comp_tele, "target.x", exit_x)
-                    --ComponentSetValue2(comp_tele, "target.y", exit_y)
                     ComponentSetValue2(comp_tele, "target", exit_x, exit_y)
                 end
             end

@@ -52,5 +52,7 @@ function OnPlayerSpawned(player_entity)
 	if GameHasFlagRun("gurbert_init") then return end
 	GameAddFlagRun("gurbert_init")
 
+	--EntityLoad("mods/gurbertmod/files/entities/items/spectral_tablet/item.xml", x, y-20)
+
 	GlobalsSetValue("gurbert_frog_gate_exit_id", "-1")
 end

@@ -1,0 +1,28 @@
+<Entity tags="tablet,gurbert_cured_tablet">
+	<Base file="data/entities/items/books/base_book.xml">
+		<UIInfoComponent
+			name="$item_gurbert_cured_tablet_title"
+			>
+		</UIInfoComponent>
+
+		<PhysicsImageShapeComponent 
+			image_file="mods/gurbertmod/files/entities/items/spectral_tablet/cured_tablet.png"
+		></PhysicsImageShapeComponent>
+		
+		<ItemComponent
+			item_name="$item_gurbert_cured_tablet_title"
+			ui_sprite="mods/gurbertmod/files/entities/items/spectral_tablet/cured_tablet_ui.png"
+			ui_description="$item_gurbert_cured_tablet_desc"
+			>
+		</ItemComponent>
+
+		<SpriteComponent
+			image_file="mods/gurbertmod/files/entities/items/spectral_tablet/cured_tablet_inhand.png"
+		></SpriteComponent>
+		
+		<AbilityComponent
+			ui_name="$item_gurbert_cured_tablet_title"
+			>
+		</AbilityComponent>
+	</Base>
+</Entity>

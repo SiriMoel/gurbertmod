@@ -133,6 +133,56 @@ local new_actions = {
 
 		end,
 	},
+	{
+		id          = "SPECTRALISE_TABLETS",
+		name 		= "$action_gurbert_spectralise_tablets",
+		description = "$actiondesc_gurbert_spectralise_tablets",
+		sprite 		= "mods/gurbertmod/files/ui_gfx/gun_actions/spectralise_tablets.png",
+		--sprite_unidentified = "data/ui_gfx/gun_actions/spread_reduce_unidentified.png",
+		type 		= ACTION_TYPE_UTILITY,
+		spawn_level                       = "10",
+		spawn_probability                 = "0",
+		price = 200,
+		mana = 0,
+		action = function()
+			if reflecting then return end
+			local this = GetUpdatedEntityID()
+			local x, y = EntityGetTransform(this)
+			local targets = EntityGetInRadiusWithTag(x, y, 160, "tablet")
+			if #targets > 0 then
+				for i=1,#targets do
+					local tx, ty = EntityGetTransform(targets[i])
+					EntityLoad("mods/gurbertmod/files/entities/items/spectral_tablet/item.xml", tx, ty)
+					EntityKill(targets[i])
+				end
+			end
+		end,
+	},
+	{
+		id          = "CURE_TABLETS",
+		name 		= "$action_gurbert_cure_tablets",
+		description = "$actiondesc_gurbert_cure_tablets",
+		sprite 		= "mods/gurbertmod/files/ui_gfx/gun_actions/cure_tablets.png",
+		--sprite_unidentified = "data/ui_gfx/gun_actions/spread_reduce_unidentified.png",
+		type 		= ACTION_TYPE_UTILITY,
+		spawn_level                       = "10",
+		spawn_probability                 = "0",
+		price = 200,
+		mana = 0,
+		action = function()
+			if reflecting then return end
+			local this = GetUpdatedEntityID()
+			local x, y = EntityGetTransform(this)
+			local targets = EntityGetInRadiusWithTag(x, y, 160, "gurbert_tablet")
+			if #targets > 0 then
+				for i=1,#targets do
+					local tx, ty = EntityGetTransform(targets[i])
+					EntityLoad("mods/gurbertmod/files/entities/items/spectral_tablet/cured_tablet.xml", tx, ty)
+					EntityKill(targets[i])
+				end
+			end
+		end,
+	},
 }
 
 --[[local actions_to_insert = {}
