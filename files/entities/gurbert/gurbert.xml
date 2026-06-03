@@ -1,0 +1,68 @@
+<Entity tags="gurbert">
+
+	<!-- why is it broken :( -->
+
+	<UIInfoComponent
+		name="Gurbert"
+	></UIInfoComponent>
+
+	<ItemComponent
+		_tags="enabled_in_world"
+		max_child_items="0"
+		play_spinning_animation="0"
+		is_pickable="1"
+		is_equipable_forced="1"
+		ui_sprite="mods/gurbertmod/files/entities/gurbert/sprites/sprite_ui.png"
+		preferred_inventory="QUICK"
+		item_name="Gurbert"
+		ui_description="NYI"
+	></ItemComponent>
+
+	<AbilityComponent
+		ui_name="Gurbert"
+		throw_as_item="1"
+		><gun_config
+			deck_capacity="0"
+		></gun_config>
+	</AbilityComponent>
+
+
+	<!--<PhysicsThrowableComponent
+		max_throw_speed="90"
+		throw_force_coeff="1.5"
+	></PhysicsThrowableComponent>
+
+	<ProjectileComponent
+		_tags="enabled_in_world"
+		lifetime="-1"
+		penetrate_entities="1"
+		never_hit_player="1"
+	></ProjectileComponent>
+
+	<VelocityComponent
+		_tags="enabled_in_world"
+		air_friction="0.8"
+		terminal_velocity="150"
+		>
+	</VelocityComponent>-->
+
+
+	<SpriteComponent
+		_tags="enabled_in_hand"
+		_enabled="0"
+		offset_x="4"
+		offset_y="4"
+		image_file="mods/gurbertmod/files/entities/gurbert/sprites/sprite_inhand.png"
+	></SpriteComponent>
+
+    <SpriteComponent 
+        _tags="frog_big,enabled_in_world"
+		image_file="data/enemies_gfx/frog_big.xml" 
+		rect_animation="stand"
+		offset_x="0"
+		offset_y="0"
+		z_index="1.2"
+		>
+	</SpriteComponent>
+
+</Entity>

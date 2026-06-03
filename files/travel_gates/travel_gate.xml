@@ -1,4 +1,4 @@
-<Entity>
+<Entity tags="gurbert_gate">
 
     <LuaComponent
         script_source_file="mods/gurbertmod/files/travel_gates/spawn.lua"

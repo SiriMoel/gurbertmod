@@ -2,12 +2,20 @@
 	<BookComponent>
 	</BookComponent>
 
+	<SpriteAnimatorComponent/>
+
 	<LuaComponent
 		_tags="enabled_in_world,enabled_in_hand"
 		script_source_file="mods/gurbertmod/files/entities/items/spectral_tablet/tablet.lua"
 		execute_every_n_frame="1"
 		>
 	</LuaComponent>
+
+	<VariableStorageComponent
+		_tags="gurbert_frame_last_recall"
+        name="gurbert_frame_last_recall"
+        value_int="0">
+	</VariableStorageComponent>
 
 	<UIInfoComponent
 		name="$item_gurbert_tablet_title"

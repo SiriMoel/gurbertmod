@@ -1,0 +1,12 @@
+<Entity>
+
+	<Base file="mods/gurbertmod/files/travel_gates/travel_gate.xml">
+	</Base>
+
+    <VariableStorageComponent
+        _tags="frog_gate_type"
+        name="frog_gate_type"
+        value_string="fun"
+    ></VariableStorageComponent>
+    
+</Entity>

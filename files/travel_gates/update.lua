@@ -33,3 +33,28 @@ if exit_id ~= -1 then
         end
     end
 end
+
+local pos_x, pos_y = EntityGetTransform(gate)
+local targets = EntityGetInRadiusWithTag(pos_x, pos_y, 60, "gurbert_item_first")
+if #targets > 0 then
+    local comp_type = EntityGetFirstComponentIncludingDisabled(gate, VariableStorageComponent, "frog_gate_type")
+    if comp_type ~= nil then
+        local gate_type = ComponentGetValue2(comp_type, "value_string")
+
+        local t_x, t_y = EntityGetTransform(targets[1])
+
+        -- create gurbert
+        local gurbert = GurbertCreate(t_x, t_y)
+
+        local gate_types = {
+            ["meat"] = "warm",
+            ["fun"] = "temperate",
+            ["snow"] = "cold",
+        }
+        
+        GurbertSetStatus(gurbert, gate_types[gate_type], 1)
+        GurbertUpdate(gurbert)
+
+        EntityKill(targets[1])
+    end
+end
