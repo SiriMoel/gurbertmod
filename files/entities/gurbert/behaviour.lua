@@ -9,7 +9,7 @@ local comp_vel = EntityGetFirstComponentIncludingDisabled(gurbert, "VelocityComp
 if comp_vel ~= nil then
     local vel_x, vel_y = GameGetVelocityCompVelocity(gurbert) --ComponentGetValue2(comp_vel, "mVelocity")
 
-    local player = EntityGetInRadiusWithTag(pos_x, pos_y, 250, "player_unit")[1]
+    local player = EntityGetInRadiusWithTag(pos_x, pos_y, 300, "player_unit")[1]
 
     if player ~= nil then
         local player_x, player_y = EntityGetTransform(player)
@@ -31,7 +31,7 @@ if comp_vel ~= nil then
 
         if math.abs(vel_x) + math.abs(vel_y) <= 1 and dist > 40 then            
             vel_x = math.min(math.abs(dist_x) + 4, 60) * (dist_x / math.abs(dist_x)) * -2
-            vel_y = math.min(math.abs(dist_y) + 16, 130) * -3
+            vel_y = math.min(math.abs(dist_y) + 16, 170) * -3
         end
 
         if math.abs(vel_y) > 5 then
