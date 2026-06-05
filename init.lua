@@ -1,4 +1,5 @@
 dofile_once("mods/gurbertmod/files/scripts/utils.lua")
+dofile_once("mods/gurbertmod/files/scripts/gurbert.lua")
 
 -- appends
 
@@ -56,26 +57,14 @@ function OnPlayerSpawned(player_entity)
 	
 	local gurbert = GurbertCreate(x, y)
 	GurbertSetStatus(gurbert, "warm", 2)
+	GurbertSetStatus(gurbert, "temperate", 2)
+	GurbertSetStatus(gurbert, "cold", 2)
 	GurbertUpdate(gurbert)
-
-	local gurbert2 = GurbertCreate(x-30, y)
-	GurbertSetStatus(gurbert2, "temperate", 2)
-	GurbertUpdate(gurbert2)
-
-	local gurbert3 = GurbertCreate(x+30, y)
-	GurbertSetStatus(gurbert3, "cold", 2)
-	GurbertUpdate(gurbert3)
-
-	local gurbert4 = GurbertCreate(x, y-30)
-	GurbertSetStatus(gurbert4, "warm", 2)
-	GurbertSetStatus(gurbert4, "temperate", 2)
-	GurbertSetStatus(gurbert4, "cold", 2)
-	GurbertUpdate(gurbert4)
 
 	GlobalsSetValue("gurbert_frog_gate_exit_id", "-1")
 end
 
-function OnModPreInit() -- is this thew right function for this? 
+function OnModPreInit()
 	-- create gurbert sprites
 
 	print("Creating Gurbert...")
@@ -116,7 +105,7 @@ function OnModPreInit() -- is this thew right function for this?
 			end
 			if sprite_v[2] == "frog_big" then
 				--local file = ModTextFileGetContent("mods/gurbertmod/files/entities/gurbert/sprites/" .. col_v .. "/frog_big.xml")
-				local content = "<Sprite filename=\"mods/gurbertmod/files/entities/gurbert/sprites/" .. col_v .. "/frog_big.png\" offset_x=\"8\" offset_y=\"11\" default_animation=\"stand\" > <RectAnimation name=\"stand\" pos_x=\"0\" pos_y=\"0\" frame_count=\"6\" frame_width=\"16\" frame_height=\"16\" frame_wait=\"0.16\" frames_per_row=\"12\" loop=\"1\"   > </RectAnimation> <RectAnimation name=\"jump_up\" pos_x=\"0\" pos_y=\"16\" frame_count=\"1\" frame_width=\"16\" frame_height=\"16\" frame_wait=\"0.082\" frames_per_row=\"12\" loop=\"0\"   > <Event frame=\"0\" name=\"jump\" probability=\"1\" check_physics_material=\"1\"/> </RectAnimation> <RectAnimation name=\"jump_fall\" pos_x=\"0\" pos_y=\"32\" frame_count=\"1\" frame_width=\"16\" frame_height=\"16\" frame_wait=\"0.082\" frames_per_row=\"12\" loop=\"0\"   > </RectAnimation> <RectAnimation name=\"attack_ranged\" pos_x=\"0\" pos_y=\"48\" frame_count=\"12\" frame_width=\"16\" frame_height=\"16\" frame_wait=\"0.07\" frames_per_row=\"12\" loop=\"1\"   > </RectAnimation> </Sprite>"
+				local content = "<Sprite filename=\"mods/gurbertmod/files/entities/gurbert/sprites/" .. col_v .. "/frog_big.png\" offset_x=\"8\" offset_y=\"11\" default_animation=\"stand\" > <RectAnimation name=\"stand\" pos_x=\"0\" pos_y=\"0\" frame_count=\"6\" frame_width=\"16\" frame_height=\"16\" frame_wait=\"0.16\" frames_per_row=\"12\" loop=\"1\"   > </RectAnimation> <RectAnimation name=\"jump_up\" pos_x=\"0\" pos_y=\"16\" frame_count=\"1\" frame_width=\"16\" frame_height=\"16\" frame_wait=\"0.082\" frames_per_row=\"12\" loop=\"0\" > </RectAnimation> <RectAnimation name=\"jump_fall\" pos_x=\"0\" pos_y=\"32\" frame_count=\"1\" frame_width=\"16\" frame_height=\"16\" frame_wait=\"0.082\" frames_per_row=\"12\" loop=\"0\"   > </RectAnimation> <RectAnimation name=\"attack_ranged\" pos_x=\"0\" pos_y=\"48\" frame_count=\"12\" frame_width=\"16\" frame_height=\"16\" frame_wait=\"0.07\" frames_per_row=\"12\" loop=\"1\"   > </RectAnimation> </Sprite>"
 				ModTextFileSetContent("mods/gurbertmod/files/entities/gurbert/sprites/" .. col_v .. "/frog_big.xml", tostring(content))
 			end
 		end

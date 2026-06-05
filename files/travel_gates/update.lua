@@ -1,4 +1,5 @@
 dofile_once("mods/gurbertmod/files/scripts/utils.lua")
+dofile_once("mods/gurbertmod/files/scripts/gurbert.lua")
 
 local gate = GetUpdatedEntityID()
 
