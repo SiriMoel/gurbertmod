@@ -1,3 +1,57 @@
+gurbert_actions = {
+    {
+        id = "gate_tele",
+        name = "Teleport to Frog Gate",
+        desc = "",
+        setup = function(gurbert) 
+            EntityAddComponent2(gurbert, "VariableStorageComponent", {
+                _tags = "action_gate_tele_frame_last_used",
+                name = "action_gate_tele_frame_last_used",
+                value_int = 0,
+            })
+        end,
+        check_unlocked = function(gurbert) 
+            return true
+        end,
+        check_available = function(gurbert) 
+            return false
+        end,
+        draw_action_menu = function(gurbert, x, y, frames)
+            GameCreateSpriteForXFrames("mods/gurbertmod/files/ui_gfx/gurbert_actions/gate_tele.png", x, y, true, 0, 0, frames, 0)
+        end,
+        action = function(gurbert) 
+        
+        end,
+    },
+    {
+        id = "seek",
+        name = "Seek",
+        desc = "",
+        setup = function(gurbert) 
+            EntityAddComponent2(gurbert, "VariableStorageComponent", {
+                _tags = "action_seek_frame_last_used",
+                name = "action_seek_frame_last_used",
+                value_int = 0,
+            })
+        end,
+        check_unlocked = function(gurbert)
+            if GurbertGetStatus(gurbert, "temperate") == 2 then
+                return true
+            end
+            return false
+        end,
+        check_available = function(gurbert) 
+            return false
+        end,
+        draw_action_menu = function(gurbert, x, y, frames)
+            GameCreateSpriteForXFrames("mods/gurbertmod/files/ui_gfx/gurbert_actions/seek.png", x, y, true, 0, 0, frames, 0)
+        end,
+        action = function(gurbert) 
+        
+        end,
+    },
+}
+
 function GurbertCreate(x, y)
     local gurbert = EntityLoad("mods/gurbertmod/files/entities/gurbert/gurbert.xml", x, y)
     
@@ -20,6 +74,18 @@ function GurbertCreate(x, y)
         name = "gurbert_colour",
         value_string = "pale",
     })
+
+    EntityAddComponent2(gurbert, "VariableStorageComponent", {
+        _tags = "selected_action",
+        name = "selected_action",
+        value_string = "gate_tele",
+    })
+
+    for i,v in ipairs(gurbert_actions) do
+        if v.setup ~= nil then
+            v.setup(gurbert)
+        end
+    end
 
     return gurbert
 end
@@ -198,14 +264,23 @@ function GurbertCheckCompletion(gurbert) -- when would this be called? in a scri
         if num_complete == 1 then
             GamePrintImportant("title", "description", "mods/gurbertmod/files/ui_gfx/gurbert_decoration.png")
 
-            CreateItemActionEntity("GURBERT_SPECTRALISE_TABLETS", x - 16, y - 6)
-            CreateItemActionEntity("GURBERT_CURE_TABLETS", x + 16, y - 6)
+            local card = CreateItemActionEntity("GURBERT_ACTIONS", x, y - 6)
+            EntityAddComponent2(card, "VariableStorageComponent", {
+                _tags = "gurbert_id",
+                name = "gurbert_id",
+                value_int = gurbert,
+            })
 
             -- fx
         end
 
         if num_complete == 2 then
-            -- idk
+            GamePrintImportant("title", "description", "mods/gurbertmod/files/ui_gfx/gurbert_decoration.png")
+
+            CreateItemActionEntity("GURBERT_SPECTRALISE_TABLETS", x - 16, y - 6)
+            CreateItemActionEntity("GURBERT_CURE_TABLETS", x + 16, y - 6)
+
+            -- fx
         end
 
         if num_complete == 3 then
@@ -213,5 +288,19 @@ function GurbertCheckCompletion(gurbert) -- when would this be called? in a scri
         end
 
         GurbertUpdate(gurbert)
+    end
+end
+
+function GurbertColours(x, y)
+    for warm=0,2 do
+        for temperate=0,2 do
+            for cold=0,2 do
+                local gurb = GurbertCreate(x + 16 * (warm + temperate + cold), y - 6)
+                GurbertSetStatus(gurb, "warm", warm)
+                GurbertSetStatus(gurb, "temperate", temperate)
+                GurbertSetStatus(gurb, "cold", cold)
+                GurbertUpdate(gurb)
+            end
+        end
     end
 end

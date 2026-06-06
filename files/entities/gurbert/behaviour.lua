@@ -20,7 +20,7 @@ if comp_vel ~= nil then
 
         local looking = math.atan(dist_y / dist_x)
 
-        local max_angle = 3.14/12
+        local max_angle = 3.14/16
         local clamped_looking = math.max(math.min(looking, max_angle), -max_angle)
 
         if dist_x > 0 then

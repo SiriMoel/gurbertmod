@@ -2,6 +2,22 @@ dofile_once("mods/gurbertmod/files/scripts/utils.lua")
 
 local new_actions = {
 	{
+		id          = "ACTIONS",
+		name 		= "$action_gurbert_actions",
+		description = "$actiondesc_gurbert_actions",
+		sprite 		= "mods/gurbertmod/files/ui_gfx/gun_actions/actions.png",
+		type 		= ACTION_TYPE_OTHER,
+		spawn_level                       = "0",
+		spawn_probability                 = "0",
+		ai_never_uses = true,
+		price = 250,
+		mana = 0,
+		custom_xml_file="mods/gurbertmod/files/entities/misc/card_gurbert_actions/card.xml",
+		action 		= function()
+			draw_actions(1, true)
+		end,
+	},
+	{
 		id          = "REMEMBER",
 		name 		= "$action_gurbert_remember",
 		description = "$actiondesc_gurbert_remember",
