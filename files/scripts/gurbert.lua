@@ -1,5 +1,25 @@
 dofile_once("mods/gurbertmod/files/scripts/gurbert_actions.lua")
 
+function GetFPS()
+    if GlobalsGetValue("gurbertmod.estimate_fps", "true") == "true" then
+        local fps = tonumber(GlobalsGetValue("gurbert_fps", "60"))
+        local time_last = tonumber(GlobalsGetValue("gurbert_fps_time_last", "0"))
+        local frame_last = tonumber(GlobalsGetValue("gurbert_fps_frame_last", "0"))
+        local time_now = GameGetRealWorldTimeSinceStarted()
+        local frame_now = GameGetFrameNum()
+        local diff = time_now - time_last
+        if diff >= 1 then
+            fps = (frame_now - frame_last) / diff
+            --GamePrint("fps calculated to be " .. fps)
+            GlobalsSetValue("gurbert_fps_time_last", tostring(time_now))
+        	GlobalsSetValue("gurbert_fps_frame_last", tostring(frame_now))
+            GlobalsSetValue("gurbert_fps", tostring(fps))
+        end
+        return fps
+    end
+    return 60
+end
+
 function GetFrogGateExit()
     local exit_id = EntityGetWithTag("gurbert_gate_exit")[1] or -1
     return exit_id
@@ -56,8 +76,11 @@ function GurbertSetStatus(gurbert, status, num)
     if comp_status ~= nil then
         ComponentSetValue2(comp_status, "value_int", num)
     end
-
     --GurbertUpdate(gurbert)
+end
+
+function GurbertGetCompletionNumber(gurbert)
+    return GurbertGetStatus(gurbert, "warm") + GurbertGetStatus(gurbert, "temperate") + GurbertGetStatus(gurbert, "cold")
 end
 
 function GurbertUpdate(gurbert)

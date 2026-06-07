@@ -15,7 +15,7 @@ gurbert_actions = {
         end,
         check_available = function(gurbert, respond)
             respond = respond or false
-            local cooldown = 60 * 10
+            local cooldown = GetFPS() * 10
             local comp_frame_last_used = EntityGetFirstComponentIncludingDisabled(gurbert, "VariableStorageComponent", "action_gate_tele_frame_last_used")
             if comp_frame_last_used ~= nil then
                 local frame_last_used = ComponentGetValue2(comp_frame_last_used, "value_int")
@@ -31,7 +31,7 @@ gurbert_actions = {
         dont_draw_unavailable = true,
         draw_action_menu = function(gurbert, x, y, frames)
             GameCreateSpriteForXFrames("mods/gurbertmod/files/ui_gfx/gurbert_actions/gate_tele.png", x, y, true, 0, 0, frames, 0)
-            local cooldown = 60 * 10
+            local cooldown = GetFPS() * 10
             local comp_frame_last_used = EntityGetFirstComponentIncludingDisabled(gurbert, "VariableStorageComponent", "action_gate_tele_frame_last_used")
             if comp_frame_last_used ~= nil then
                 local frame_last_used = ComponentGetValue2(comp_frame_last_used, "value_int")
@@ -78,6 +78,89 @@ gurbert_actions = {
         end,
     },
     {
+        id = "attack",
+        name = "Attack",
+        desc = "",
+        setup = function(gurbert) 
+            EntityAddComponent2(gurbert, "VariableStorageComponent", {
+                _tags = "action_attack_frame_last_used",
+                name = "action_attack_frame_last_used",
+                value_int = 0,
+            })
+            EntityAddComponent2(gurbert, "VariableStorageComponent", {
+                _tags = "action_attack_enabled",
+                name = "action_attack_enabled",
+                value_bool = false,
+            })
+        end,
+        check_unlocked = function(gurbert)
+            if GurbertGetStatus(gurbert, "warm") == 2 then
+                return true
+            end
+            return false
+        end,
+        check_available = function(gurbert)
+            local cooldown = GetFPS() * (6 - GurbertGetCompletionNumber(gurbert) / 2)
+            local comp_frame_last_used = EntityGetFirstComponentIncludingDisabled(gurbert, "VariableStorageComponent", "action_attack_frame_last_used")
+            if comp_frame_last_used ~= nil then
+                local frame_last_used = ComponentGetValue2(comp_frame_last_used, "value_int")
+                local frame_now = GameGetFrameNum()
+                if frame_now > frame_last_used + cooldown then
+                    return true
+                end
+            end
+            return false
+        end,
+        dont_draw_unavailable = true,
+        draw_action_menu = function(gurbert, x, y, frames)
+            GameCreateSpriteForXFrames("mods/gurbertmod/files/ui_gfx/gurbert_actions/attack.png", x, y, true, 0, 0, frames, 0)
+            local comp_enabled = EntityGetFirstComponentIncludingDisabled(gurbert, "VariableStorageComponent", "action_attack_enabled")
+            if comp_enabled ~= nil then
+                local is_enabled = ComponentGetValue2(comp_enabled, "value_bool")
+                if is_enabled then
+                    GameCreateSpriteForXFrames("mods/gurbertmod/files/ui_gfx/gurbert_actions/attack_enabled.png", x, y, true, 0, 0, frames, 0)
+                else
+                    GameCreateSpriteForXFrames("mods/gurbertmod/files/ui_gfx/gurbert_actions/attack_disabled.png", x, y, true, 0, 0, frames, 0)
+                end
+            end
+            local cooldown = GetFPS() * (6 - GurbertGetCompletionNumber(gurbert) / 2)
+            local comp_frame_last_used = EntityGetFirstComponentIncludingDisabled(gurbert, "VariableStorageComponent", "action_attack_frame_last_used")
+            if comp_frame_last_used ~= nil then
+                local frame_last_used = ComponentGetValue2(comp_frame_last_used, "value_int")
+                local frame_now = GameGetFrameNum()
+                --[[if frame_now < frame_last_used + cooldown then
+                    GameCreateSpriteForXFrames("mods/gurbertmod/files/ui_gfx/gurbert_actions/_unavailable.png", x, y, true, 0, 0, frames, 0)
+                end]]
+                if frame_now > frame_last_used + cooldown then
+                    GameCreateSpriteForXFrames("mods/gurbertmod/files/ui_gfx/gurbert_actions/cooldowns/100.png", x, y, true, 0, 0, frames, 0)
+                elseif frame_now > frame_last_used + cooldown * 0.8 then
+                    GameCreateSpriteForXFrames("mods/gurbertmod/files/ui_gfx/gurbert_actions/cooldowns/80.png", x, y, true, 0, 0, frames, 0)
+                elseif frame_now > frame_last_used + cooldown * 0.6 then
+                    GameCreateSpriteForXFrames("mods/gurbertmod/files/ui_gfx/gurbert_actions/cooldowns/60.png", x, y, true, 0, 0, frames, 0)
+                elseif frame_now > frame_last_used + cooldown * 0.4 then
+                    GameCreateSpriteForXFrames("mods/gurbertmod/files/ui_gfx/gurbert_actions/cooldowns/40.png", x, y, true, 0, 0, frames, 0)
+                elseif frame_now > frame_last_used + cooldown * 0.2 then
+                    GameCreateSpriteForXFrames("mods/gurbertmod/files/ui_gfx/gurbert_actions/cooldowns/20.png", x, y, true, 0, 0, frames, 0)
+                else
+                    GameCreateSpriteForXFrames("mods/gurbertmod/files/ui_gfx/gurbert_actions/cooldowns/0.png", x, y, true, 0, 0, frames, 0)
+                end
+            end
+        end,
+        always_useable = true,
+        action = function(gurbert)
+            local comp_enabled = EntityGetFirstComponentIncludingDisabled(gurbert, "VariableStorageComponent", "action_attack_enabled")
+            if comp_enabled ~= nil then
+                local is_enabled = ComponentGetValue2(comp_enabled, "value_bool")
+                if is_enabled then
+                    GamePrint("Gurbert will not attack.")
+                else
+                    GamePrint("Gurbert will attack!")
+                end
+                ComponentSetValue2(comp_enabled, "value_bool", not is_enabled)
+            end
+        end,
+    },
+    --[[{
         id = "seek",
         name = "Seek",
         desc = "",
@@ -103,5 +186,5 @@ gurbert_actions = {
         action = function(gurbert) 
         
         end,
-    },
+    },]]
 }

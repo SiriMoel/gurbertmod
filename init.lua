@@ -50,6 +50,12 @@ add_scene(scenes)
 function OnPlayerSpawned(player_entity)
 	local x, y = EntityGetTransform(player_entity)
 
+	GlobalsSetValue("gurbertmod.estimate_fps", tostring(ModSettingGet("gurbertmod.estimate_fps")))
+
+	GlobalsSetValue("gurbert_fps_time_last", tostring(GameGetRealWorldTimeSinceStarted()))
+	GlobalsSetValue("gurbert_fps_frame_last", tostring(GameGetFrameNum()))
+	GlobalsSetValue("gurbert_fps", "60")
+
 	if GameHasFlagRun("gurbert_init") then return end
 	GameAddFlagRun("gurbert_init")
 
@@ -120,4 +126,10 @@ function OnModPreInit()
 			end
 		end
 	end
+end
+
+function OnPausedChanged(is_paused, is_inventory_pause)
+    if is_paused then
+        GlobalsSetValue("gurbertmod.estimate_fps", tostring(ModSettingGet("gurbertmod.estimate_fps")))
+    end
 end

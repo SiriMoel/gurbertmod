@@ -1,5 +1,5 @@
 dofile_once("mods/gurbertmod/files/scripts/utils.lua")
---dofile_once("mods/gurbertmod/files/scripts/gurbert.lua")
+dofile_once("mods/gurbertmod/files/scripts/gurbert.lua")
 
 local gurbert = GetUpdatedEntityID()
 
@@ -46,4 +46,31 @@ if comp_vel ~= nil then
     end
 
     ComponentSetValue2(comp_vel, "mVelocity", vel_x, vel_y)
+end
+
+local comp_attack_enabled = EntityGetFirstComponentIncludingDisabled(gurbert, "VariableStorageComponent", "action_attack_enabled")
+if comp_attack_enabled ~= nil then
+    local attacking_enabled = ComponentGetValue2(comp_attack_enabled, "value_bool")
+    if attacking_enabled then
+        local comp_frame_last_attack = EntityGetFirstComponentIncludingDisabled(gurbert, "VariableStorageComponent", "action_attack_frame_last_used")
+        if comp_frame_last_attack ~= nil then
+            local attack_available = false
+            for i,v in ipairs(gurbert_actions) do
+                if v.id == "attack" then
+                    if v.check_available(gurbert) == true then
+                        attack_available = true
+                    end
+                    break
+                end
+            end
+            if attack_available then
+                local targets = EntityGetInRadiusWithTag(pos_x, pos_y, 90, "homing_target")
+                if #targets > 0 then
+                    GamePrint("Pow! Found " .. #targets .. " targets.")
+                    ComponentSetValue2(comp_frame_last_attack, "value_int", GameGetFrameNum())
+                    GamePlayAnimation(gurbert, "attack", 11)
+                end
+            end
+        end
+    end
 end

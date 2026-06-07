@@ -32,8 +32,10 @@ local new_actions = {
 					end
 
 					if gurbert_action ~= nil then
-						if gurbert_action.check_unlocked(gurbert) and gurbert_action.check_available(gurbert, true) then
-							gurbert_action.action(gurbert)
+						if gurbert_action.check_unlocked(gurbert) then
+							if gurbert_action.check_available(gurbert, true) or gurbert_action.always_useable then
+								gurbert_action.action(gurbert)
+							end
 						end
 					end
 
