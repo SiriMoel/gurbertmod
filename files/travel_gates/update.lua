@@ -3,7 +3,15 @@ dofile_once("mods/gurbertmod/files/scripts/gurbert.lua")
 
 local gate = GetUpdatedEntityID()
 
-local exit_id = tonumber(GlobalsGetValue("gurbert_frog_gate_exit_id", "-1"))
+local exit_id = -1 --tonumber(GlobalsGetValue("gurbert_frog_gate_exit_id", "-1"))
+
+local x, y = EntityGetTransform(gate)
+
+local player = EntityGetInRadiusWithTag(x, y, 300, "player_unit")[1]
+
+if player ~= nil then
+    exit_id = GetFrogGateExit()
+end
 
 if exit_id ~= -1 then
     local exit_x, exit_y = EntityGetTransform(exit_id)
@@ -14,7 +22,6 @@ if exit_id ~= -1 then
         local portal = EntityGetAllChildren(gate, "frog_gate_portal")[1] or nil
         if open == true then
             if portal == nil then
-                local x, y = EntityGetTransform(gate)
                 local entity_portal = EntityLoad("mods/gurbertmod/files/travel_gates/portal.xml", x, y-50)
                 local comp_tele = EntityGetFirstComponentIncludingDisabled(entity_portal, "TeleportComponent")
                 if comp_tele ~= nil then

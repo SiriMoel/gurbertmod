@@ -16,6 +16,12 @@ function interacting(entity_who_interacted, entity_interacted, interactable_name
             GamePrint("closed!")
         end
         GlobalsSetValue("gurbert_frog_gate_exit_id", tostring(gate))
+
+        local exits = EntityGetWithTag("gurbert_gate_exit")
+        for i,v in ipairs(exits) do
+            EntityRemoveTag(v, "gurbert_gate_exit")
+        end
+        EntityAddTag(gate, "gurbert_gate_exit")
     else
         GamePrint("couldnt find the component")
     end

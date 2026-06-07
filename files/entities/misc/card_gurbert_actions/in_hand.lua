@@ -14,7 +14,7 @@ if player ~= nil and EntityGetRootEntity(card) == player then
         --local gurbert = ComponentGetValue2(comp_gurbert_id, "value_int")
         local gurbert = EntityGetWithTag("gurbert")[1]
 
-        if EntityGetIsAlive(gurbert) then
+        if gurbert ~= nil and EntityGetIsAlive(gurbert) then
             local comp_selected_action = EntityGetFirstComponentIncludingDisabled(gurbert, "VariableStorageComponent", "selected_action")
 
             local actions_unlocked = {}
@@ -46,7 +46,7 @@ if player ~= nil and EntityGetRootEntity(card) == player then
                             ComponentSetValue2(comp_selected_action, "value_string", v.id)
                         end
 
-                        if v.check_available() ~= true then
+                        if v.check_available(gurbert) ~= true and not v.dont_draw_unavailable then
                             GameCreateSpriteForXFrames("mods/gurbertmod/files/ui_gfx/gurbert_actions/_unavailable.png", draw_x, draw_y, true, 0, 0, frames, 0)
                         end
                     end

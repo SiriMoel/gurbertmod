@@ -1,4 +1,5 @@
 dofile_once("mods/gurbertmod/files/scripts/utils.lua")
+dofile_once("mods/gurbertmod/files/scripts/gurbert.lua")
 
 local new_actions = {
 	{
@@ -6,7 +7,7 @@ local new_actions = {
 		name 		= "$action_gurbert_actions",
 		description = "$actiondesc_gurbert_actions",
 		sprite 		= "mods/gurbertmod/files/ui_gfx/gun_actions/actions.png",
-		type 		= ACTION_TYPE_OTHER,
+		type 		= ACTION_TYPE_UTILITY,
 		spawn_level                       = "0",
 		spawn_probability                 = "0",
 		ai_never_uses = true,
@@ -14,7 +15,31 @@ local new_actions = {
 		mana = 0,
 		custom_xml_file="mods/gurbertmod/files/entities/misc/card_gurbert_actions/card.xml",
 		action 		= function()
-			draw_actions(1, true)
+			if not reflecting then
+				local gurbert = EntityGetWithTag("gurbert")[1]
+				if gurbert ~= nil and EntityGetIsAlive(gurbert) then
+					local comp_selected_action = EntityGetFirstComponentIncludingDisabled(gurbert, "VariableStorageComponent", "selected_action")
+
+					local selected_action = ComponentGetValue2(comp_selected_action, "value_string")
+
+					local gurbert_action
+
+					for i,v in ipairs(gurbert_actions) do
+						if v.id == selected_action then
+							gurbert_action = v
+							break
+						end
+					end
+
+					if gurbert_action ~= nil then
+						if gurbert_action.check_unlocked(gurbert) and gurbert_action.check_available(gurbert, true) then
+							gurbert_action.action(gurbert)
+						end
+					end
+
+				end
+			end
+			--draw_actions(1, true)
 		end,
 	},
 	{

@@ -1,4 +1,5 @@
 dofile_once("mods/gurbertmod/files/scripts/utils.lua")
+dofile_once("mods/gurbertmod/files/scripts/gurbert.lua")
 
 function interacting(entity_who_interacted, entity_interacted, interactable_name)
   
@@ -9,7 +10,7 @@ function interacting(entity_who_interacted, entity_interacted, interactable_name
 
     local comp_open = EntityGetFirstComponentIncludingDisabled(gate, "VariableStorageComponent", "frog_gate_open")
 
-    local exit_id = tonumber(GlobalsGetValue("gurbert_frog_gate_exit_id", "-1"))
+    local exit_id = GetFrogGateExit() --tonumber(GlobalsGetValue("gurbert_frog_gate_exit_id", "-1"))
 
     if comp_open ~= nil then
         if exit_id ~= -1 then

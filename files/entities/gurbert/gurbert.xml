@@ -29,8 +29,8 @@
 	<SpriteComponent
 		_tags="enabled_in_hand"
 		_enabled="0"
-		offset_x="4"
-		offset_y="4"
+		offset_x="3"
+		offset_y="8"
 		image_file="mods/gurbertmod/files/entities/gurbert/sprites/sprite_inhand.png"
 	></SpriteComponent>
 

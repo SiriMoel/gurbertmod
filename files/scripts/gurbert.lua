@@ -1,56 +1,9 @@
-gurbert_actions = {
-    {
-        id = "gate_tele",
-        name = "Teleport to Frog Gate",
-        desc = "",
-        setup = function(gurbert) 
-            EntityAddComponent2(gurbert, "VariableStorageComponent", {
-                _tags = "action_gate_tele_frame_last_used",
-                name = "action_gate_tele_frame_last_used",
-                value_int = 0,
-            })
-        end,
-        check_unlocked = function(gurbert) 
-            return true
-        end,
-        check_available = function(gurbert) 
-            return false
-        end,
-        draw_action_menu = function(gurbert, x, y, frames)
-            GameCreateSpriteForXFrames("mods/gurbertmod/files/ui_gfx/gurbert_actions/gate_tele.png", x, y, true, 0, 0, frames, 0)
-        end,
-        action = function(gurbert) 
-        
-        end,
-    },
-    {
-        id = "seek",
-        name = "Seek",
-        desc = "",
-        setup = function(gurbert) 
-            EntityAddComponent2(gurbert, "VariableStorageComponent", {
-                _tags = "action_seek_frame_last_used",
-                name = "action_seek_frame_last_used",
-                value_int = 0,
-            })
-        end,
-        check_unlocked = function(gurbert)
-            if GurbertGetStatus(gurbert, "temperate") == 2 then
-                return true
-            end
-            return false
-        end,
-        check_available = function(gurbert) 
-            return false
-        end,
-        draw_action_menu = function(gurbert, x, y, frames)
-            GameCreateSpriteForXFrames("mods/gurbertmod/files/ui_gfx/gurbert_actions/seek.png", x, y, true, 0, 0, frames, 0)
-        end,
-        action = function(gurbert) 
-        
-        end,
-    },
-}
+dofile_once("mods/gurbertmod/files/scripts/gurbert_actions.lua")
+
+function GetFrogGateExit()
+    local exit_id = EntityGetWithTag("gurbert_gate_exit")[1] or -1
+    return exit_id
+end
 
 function GurbertCreate(x, y)
     local gurbert = EntityLoad("mods/gurbertmod/files/entities/gurbert/gurbert.xml", x, y)
@@ -265,11 +218,11 @@ function GurbertCheckCompletion(gurbert) -- when would this be called? in a scri
             GamePrintImportant("title", "description", "mods/gurbertmod/files/ui_gfx/gurbert_decoration.png")
 
             local card = CreateItemActionEntity("GURBERT_ACTIONS", x, y - 6)
-            EntityAddComponent2(card, "VariableStorageComponent", {
+            --[[EntityAddComponent2(card, "VariableStorageComponent", {
                 _tags = "gurbert_id",
                 name = "gurbert_id",
                 value_int = gurbert,
-            })
+            })]] -- using EntityGetWithTag("gurbert")[1] now, maybe make a GurbertGet() function?
 
             -- fx
         end
